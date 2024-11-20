@@ -11,18 +11,23 @@ ap.add_argument("-v", "--video", help="path to the (optional) video file")
 args = vars(ap.parse_args())
 
 # Rango de color para el verde
-greenLower = (56, 66, 167)
-greenUpper = (108, 255, 255)
+greenLower = (68, 94, 68)
+greenUpper = (255, 255, 255)
 
 # Inicializa la cámara
 if not args.get("video", False):
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(1)
 else:
     camera = cv2.VideoCapture(args["video"])
 
 # Variables para controlar el tiempo de impresión
 last_print_time = time.time()
 print_interval = 5  # Intervalo de impresión en segundos
+
+# calulo de distancia. A partir de (4, 95) y (1, 25)
+def get_distance(diameter):
+    meters = -0.04285714 * diameter + 5.07142857
+    return meters
 
 while True:
     (grabbed, frame) = camera.read()
@@ -65,6 +70,10 @@ while True:
 
             # Mostrar el diámetro en el marco
             cv2.putText(frame, f"Diameter: {int(diameter)} px", (int(x) - 50, int(y) - 10), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+            
+            # Mostrar distancia
+            cv2.putText(frame, f"Distance: {(get_distance(diameter))} m", (int(x) - 70, int(y) - 40), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
             # Determinar la posición de la pelota en relación al centro de la cámara

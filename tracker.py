@@ -11,8 +11,8 @@ ap.add_argument("-v", "--video", help="path to the (optional) video file")
 args = vars(ap.parse_args())
 
 # Rango de color para el verde
-greenLower = (31, 49, 158)
-greenUpper = (250, 255, 255)
+greenLower = (56, 66, 167)
+greenUpper = (108, 255, 255)
 
 # Inicializa la cámara
 if not args.get("video", False):
@@ -54,11 +54,18 @@ while True:
         ((x, y), radius) = cv2.minEnclosingCircle(c)
 
         if radius > 10:
+            # Calcular el diámetro
+            diameter = radius * 2
+
             # Dibujar el círculo alrededor de la pelota
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
 
             # Dibujar el centro de la pelota
             cv2.circle(frame, (int(x), int(y)), 5, (0, 255, 0), -1)  # Centro de la pelota en verde
+
+            # Mostrar el diámetro en el marco
+            cv2.putText(frame, f"Diameter: {int(diameter)} px", (int(x) - 50, int(y) - 10), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
             # Determinar la posición de la pelota en relación al centro de la cámara
             if time.time() - last_print_time > print_interval:

@@ -11,8 +11,8 @@ ap.add_argument("-v", "--video", help="path to the (optional) video file")
 args = vars(ap.parse_args())
 
 # Rango de color para el verde
-greenLower = (29, 86, 6)
-greenUpper = (64, 255, 255)
+greenLower = (31, 49, 158)
+greenUpper = (250, 255, 255)
 
 # Inicializa la cámara
 if not args.get("video", False):
@@ -72,7 +72,7 @@ while True:
 
     # Mostrar los resultados
     cv2.imshow("Frame", frame)
-    # cv2.imshow("Mask", mask)
+    cv2.imshow("Mask", mask)
 
     key = cv2.waitKey(1) & 0xFF
 

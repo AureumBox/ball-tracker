@@ -11,7 +11,7 @@ greenUpper = (255, 255, 255)
 camera = cv2.VideoCapture(0)
 
 # Parámetros de calibración
-REAL_DIAMETER = 0.1  # Diámetro real de la pelota en metros (ajustar según el objeto)
+REAL_DIAMETER = 0.14  # Diámetro real de la pelota en metros (ajustar según el objeto)
 FOCAL_LENGTH = 600  # Longitud focal en píxeles (ajustar según calibración)
 
 # Calculo de distancia
@@ -26,8 +26,8 @@ last_print_time = time.time()
 print_interval = 2  # Intervalo de impresión en segundos
 
 # Tamaño del cuadrado
-min_square_size = 140 
-max_square_size = 250 
+min_square_size = 67
+max_square_size = 168
 
 while True:
     (grabbed, frame) = camera.read()
@@ -95,14 +95,20 @@ while True:
                     if x > camera_center[0] + 50:  # Si la pelota está muy a la derecha
                         print("Girar a derecha")
                 else:
-                    if diameter_in_pixels < max_square_size and diameter_in_pixels > min_square_size:
+                    if distance < 1.25 and distance > 0.50:
                         print("Listo para responder al color")
+                        print(distance)
+                        print(diameter_in_pixels)
 
-                    if diameter_in_pixels > max_square_size:
+                    if distance < 0.50 :
                         print("Atrás")
+                        print(distance)
+                        print(diameter_in_pixels)
 
-                    if diameter_in_pixels < min_square_size:
+                    if distance > 1.25:
                         print("Adelante")
+                        print(distance)
+                        print(diameter_in_pixels)
                         
                 last_print_time = time.time()
 
